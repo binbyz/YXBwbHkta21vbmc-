@@ -14,7 +14,7 @@
     - mariadb:latest (Distrib 10.6.5-MariaDB)
     - nginx:latest
 
-## Setup
+## Setup Docker
 
 ### 1. Build Image
 
@@ -41,4 +41,9 @@ kmong-mariadb       "docker-entrypoint.s…"   db                  running      
 kmong-nginx         "/docker-entrypoint.…"   nginx               running             0.0.0.0:8080->8080/tcp
 ```
 
-✔️ `PORTS` 매핑이 일반적인 서비스 포트와 다름의 주의하여야 합니다.
+✔️ `PORTS` 매핑이 범용 서비스 포트와 다름의 주의하여야 합니다. 개발환경의 충돌을 피하고자 범용 포트와 다르게 설정 되었습니다.
+
+| Service | Local Port | Image Port |
+| ------- | ---------- | ---------- |
+| MariaDB | 3307 | 3306 |
+| Nginx | 8080 | 8080 |
