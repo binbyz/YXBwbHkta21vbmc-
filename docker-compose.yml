@@ -1,0 +1,53 @@
+version: "3.9"
+
+# ----- networks -----
+networks:
+  kmong-network:
+
+services:
+  # ----- application -----
+  app:
+    build:
+      args:
+        user: kmong
+        uid: 1001
+      context: ./.docker
+      dockerfile: Dockerfile
+    image: kmongapp
+    container_name: kmong-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www
+      - ./.docker/php/production.ini:/usr/local/etc/php/conf.d/production.ini
+    networks:
+      - kmong-network
+  # ----- database -----
+  db:
+    image: mariadb
+    container_name: kmong-mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'kmong'
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_PASSWORD: 'kmong'
+      MYSQL_USER: 'kmong'
+    ports:
+      - 3307:3306
+    volumes:
+      - ./db/mariadb:/var/lib/mysql
+      - ./.docker/mariadb/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - kmong-network
+  # ----- nginx -----
+  nginx:
+    image: nginx
+    container_name: kmong-nginx
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    volumes:
+      - ./src:/var/www
+      - ./.docker/nginx:/etc/nginx/conf.d
+    networks:
+      - kmong-network
