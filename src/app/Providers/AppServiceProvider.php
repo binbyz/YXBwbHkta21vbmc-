@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Contracts\MemberServiceContract;
+use App\Http\Services\MemberService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(MemberServiceContract::class, function ($app) {
+            return new MemberService();
+        });
     }
 
     /**

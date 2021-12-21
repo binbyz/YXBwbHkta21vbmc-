@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Contracts\MemberServiceContract;
+use App\Contracts\MemberServiceContract;
+use App\Http\Controllers\Traits\ResponseFormatGenerator;
+use App\Exceptions\MemberException;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class MemberController extends Controller
 {
+    /**
+     * 통일된 응답결과를 사용하기 위한 메소드가 포함돼 있습니다.
+     */
+    use ResponseFormatGenerator;
+
     private MemberServiceContract $memberService;
 
     /**
@@ -36,7 +45,31 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'email' => 'bail|string|required|email:rfc,dns|max:50|unique:kmong_members,email',
+            'password' => 'bail|string|required|min:7',
+            'display_name' => 'required|string|min:3|max:10|unique:kmong_members,display_name',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                $this->resformat(false, json_decode($validator->errors(), true)),
+                Response::HTTP_BAD_REQUEST,
+            );
+        }
+
+        try {
+            $message = '';
+            $joinned = $this->memberService->join(
+                $request->get('email'),
+                $request->get('password'),
+                $request->get('display_name'),
+            );
+        } catch (MemberException $e) {
+            $message = $e->getMessage();
+        }
+
+        return response()->json($this->resformat($joinned, $message));
     }
 
     /**

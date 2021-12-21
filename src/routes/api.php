@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Kmong Application RESTful API
-Route::resource([
+Route::resources([
     'member' => MemberController::class,
 ]);
