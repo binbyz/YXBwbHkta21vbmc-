@@ -52,17 +52,15 @@ kmong-nginx         "/docker-entrypoint.…"   nginx               running      
 
 ### 1. Install Dependencies with Composer
 
-라라벨 실행환경에 필요한 의존성 라이브러리들을 설치하기 위해 `./src` 디렉토리로 이동 후 아래 명령어를 통해 의존성을 해결합니다.
-
-```bash
-$ composer install
-```
-
-로컬 머신에 **Composer**가 설치되어 있지 않은 경우 다음과 같이 `kmong-app`에 `bash` 쉘로 접속 후 설치가 가능 하지만, 로컬 머신에 설치하시길 권장합니다. 해당 섹션에서는 **Composer** 설치 관련 내용은 생략합니다.
+라라벨 실행환경에 필요한 의존성 라이브러리들을 설치하기 위해 `kmong-app` 이미지에 접속합니다.
 
 ```bash
 $ docker exec -it kmong-app bash
+```
 
+`kmong-app` 안에서 다음 경로로 이동 후 **composer**를 통해 의존성을 해결(설치)합니다.
+
+```bash
 $ cd /var/www/ && composer install
 ```
 
@@ -70,14 +68,12 @@ $ cd /var/www/ && composer install
 
 ### 2. Migrations
 
-로컬 DB에 테이블을 마이그레이션 하기 위해 로컬 머신에서 다음 명령어를 실행합니다. (경로: `./src/`)
+로컬 DB에 테이블을 마이그레이션 하기 위해 다음 명령어를 실행합니다. (경로: `/var/www/`)
 
 ```bash
 $ php artisan migrate
 ```
 
-✔️ 로컬 머신에서 `php`를 실행할 수 있어야 합니다. 해당 섹션에서도 `php` 설치 관련 내용은 생략합니다.
-
 ### 3. Check it out
 
-로컬 머신에서 `http://localhost:8080` 페이지에 접속하여 라라벨 프레임워크의 기본 화면이 정상적으로 출력되는지 확인합니다.
+**로컬 머신**에서 `http://localhost:8080` 페이지에 접속하여 라라벨 프레임워크의 기본 화면이 정상적으로 출력되는지 확인합니다.
