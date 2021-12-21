@@ -13,6 +13,7 @@
     - php:8.0-fpm
     - mariadb:latest (Distrib 10.6.5-MariaDB)
     - nginx:latest
+    - redis:latest (6.2.6)
 
 ## Setup Docker
 
