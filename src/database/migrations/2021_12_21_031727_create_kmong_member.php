@@ -13,7 +13,7 @@ class CreateKmongMember extends Migration
      */
     public function up()
     {
-        Schema::create('kmong_member', function (Blueprint $table) {
+        Schema::create('kmong_members', function (Blueprint $table) {
             $table->id()->unsigned();
             $table->string('email', 50)->unique();
             $table->string('password');
@@ -30,6 +30,6 @@ class CreateKmongMember extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kmong_member');
+        Schema::dropIfExists('kmong_members');
     }
 }

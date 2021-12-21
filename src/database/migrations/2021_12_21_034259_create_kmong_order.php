@@ -13,7 +13,7 @@ class CreateKmongOrder extends Migration
      */
     public function up()
     {
-        Schema::create('kmong_order', function (Blueprint $table) {
+        Schema::create('kmong_orders', function (Blueprint $table) {
             $table->id()->unsigned();
 
             $table->unsignedBigInteger('member_id');
@@ -34,6 +34,6 @@ class CreateKmongOrder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kmong_order');
+        Schema::dropIfExists('kmong_orders');
     }
 }

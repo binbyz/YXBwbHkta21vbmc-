@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKmongGoods extends Migration
+class CreateKmongProduct extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateKmongGoods extends Migration
      */
     public function up()
     {
-        Schema::create('kmong_goods', function (Blueprint $table) {
+        Schema::create('kmong_products', function (Blueprint $table) {
             $table->id()->unsigned();
 
             $table->string('goodsname')->fulltext();
@@ -33,6 +33,6 @@ class CreateKmongGoods extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kmong_goods');
+        Schema::dropIfExists('kmong_products');
     }
 }
