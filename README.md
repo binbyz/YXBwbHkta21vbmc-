@@ -39,6 +39,7 @@ NAME                COMMAND                  SERVICE             STATUS         
 kmong-app           "docker-php-entrypoi…"   app                 running             9000/tcp
 kmong-mariadb       "docker-entrypoint.s…"   db                  running             0.0.0.0:3307->3306/tcp
 kmong-nginx         "/docker-entrypoint.…"   nginx               running             0.0.0.0:8080->8080/tcp
+kmong-redis         "docker-entrypoint.s…"   redis               running             0.0.0.0:6382->6379/tcp
 ```
 
 ✔️ `PORTS` 매핑이 범용 서비스 포트와 다름의 주의하여야 합니다. 개발환경의 충돌을 피하고자 범용 포트와 다르게 설정 되었습니다.
@@ -47,6 +48,7 @@ kmong-nginx         "/docker-entrypoint.…"   nginx               running      
 | ------- | ---------- | ---------- |
 | MariaDB | 3307 | 3306 |
 | Nginx | 8080 | 8080 |
+| Redis | 6382 | 6379 |
 
 ## Setup Laravel
 
