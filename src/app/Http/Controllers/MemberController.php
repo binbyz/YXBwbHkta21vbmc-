@@ -116,7 +116,7 @@ class MemberController extends Controller
     public function login(Request $request): JsonResponse
     {
         request()->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
