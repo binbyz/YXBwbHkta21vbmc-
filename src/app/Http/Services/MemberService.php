@@ -4,7 +4,9 @@ namespace App\Http\Services;
 
 use App\Contracts\MemberServiceContract;
 use App\Models\KmongMember;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class MemberService implements MemberServiceContract
 {
@@ -36,9 +38,9 @@ class MemberService implements MemberServiceContract
      * @param string $password
      * @return boolean
      */
-    public function login(string $email, string $password): bool
+    public function login(array $credentials): bool
     {
-        return false;
+        return Auth::attempt($credentials);
     }
 
     /**
@@ -48,6 +50,9 @@ class MemberService implements MemberServiceContract
      */
     public function logout(): bool
     {
-        return false;
+        Session::flush();
+        Auth::logout();
+
+        return true;
     }
 }

@@ -17,11 +17,10 @@ interface MemberServiceContract
     /**
      * 로그인을 처리합니다.
      *
-     * @param string $email
-     * @param string $password
+     * @param array $credentials
      * @return boolean
      */
-    public function login(string $email, string $password): bool;
+    public function login(array $credentials): bool;
 
     /**
      * 로그아웃을 처리합니다.

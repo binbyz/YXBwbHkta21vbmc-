@@ -23,3 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resources([
     'member' => MemberController::class,
 ]);
+
+Route::post('/member/login', [MemberController::class, 'login']);
+Route::post('/member/logout', [MemberController::class, 'logout']);

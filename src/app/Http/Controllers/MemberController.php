@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Contracts\MemberServiceContract;
 use App\Http\Controllers\Traits\ResponseFormatGenerator;
 use App\Exceptions\MemberException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -43,7 +44,7 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => 'bail|string|required|email:rfc,dns|max:50|unique:kmong_members,email',
@@ -104,5 +105,45 @@ class MemberController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * 로그인 처리
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function login(Request $request): JsonResponse
+    {
+        request()->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if ($this->memberService->login($credentials)) {
+            return response()->json(
+                $this->resformat(true, '로그인이 정상 처리되었습니다.')
+            );
+        }
+
+        return response()->json(
+            $this->resformat(false, '로그인 실패')
+        );
+    }
+
+    /**
+     * 로그아웃 처리
+     *
+     * @return void
+     */
+    public function logout(): JsonResponse
+    {
+        $this->memberService->logout();
+
+        return response()->json(
+            $this->resformat(true)
+        );
     }
 }

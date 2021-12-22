@@ -10,4 +10,17 @@ class KmongMember extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected array $fillable = [
+        'email',
+        'password',
+        'display_name',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected array $hidden = [
+        'password',
+    ];
 }
