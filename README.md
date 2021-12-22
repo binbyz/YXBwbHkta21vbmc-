@@ -14,6 +14,7 @@
     - mariadb:latest (Distrib 10.6.5-MariaDB)
     - nginx:latest
     - redis:latest (6.2.6)
+      - Session Storage
 
 ## Setup Docker
 
