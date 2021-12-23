@@ -78,6 +78,12 @@ $ cd /var/www/ && composer install
 $ php artisan migrate
 ```
 
+또 한, 기본적인 테스트를 위한 더미 데이터를 생성하기 위해 다음의 명령어를 실행합니다.
+
+```bash
+$ php artisan db:seed --class=ProductSeeder
+```
+
 ### 3. Check it out
 
 **로컬 머신**에서 `http://localhost:8080` 페이지에 접속하여 라라벨 프레임워크의 기본 화면이 정상적으로 출력되는지 확인합니다.
