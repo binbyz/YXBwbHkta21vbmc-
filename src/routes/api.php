@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\MemberController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\KmongController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resources([
     'member' => MemberController::class,
 ]);
+
+/** #controller 상품정보 조회 */
+Route::get('/shop/item/{productId}', [KmongController::class, 'getProduct']);

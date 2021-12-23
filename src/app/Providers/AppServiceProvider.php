@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\MemberServiceContract;
+use App\Contracts\OnlineShopContract;
 use App\Http\Services\MemberService;
+use App\Http\Services\KmongService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(MemberServiceContract::class, function ($app) {
             return new MemberService();
+        });
+
+        $this->app->singleton(OnlineShopContract::class, function ($app) {
+            return new KmongService();
         });
     }
 

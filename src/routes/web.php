@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KmongController;
 use App\Http\Controllers\MemberController;
 
 /*
@@ -22,6 +22,10 @@ Route::get('/', function () {
 Route::post('/member/login', [MemberController::class, 'login']);
 Route::post('/member/logout', [MemberController::class, 'logout']);
 
-Route::post('/test', function () {
-    dd(Auth::check());
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    /** #controller 주문하기 */
+    Route::post('/shop/order', [KmongController::class, 'order']);
+
+    /** #controller 주문내역 가져오기 */
+    Route::get('/shop/orders', [KmongController::class, 'orderList']);
 });

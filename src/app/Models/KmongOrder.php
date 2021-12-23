@@ -56,4 +56,12 @@ class KmongOrder extends Model
 
         return '';
     }
+
+    /**
+     * 상품정보를 가져옵니다.
+     */
+    public function productInfo()
+    {
+        return $this->hasOne(KmongProduct::class, 'id', 'goods_id');
+    }
 }

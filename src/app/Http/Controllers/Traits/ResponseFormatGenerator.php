@@ -16,7 +16,7 @@ trait ResponseFormatGenerator
         $format = ['status' => $status];
 
         if (is_array($messages)) {
-            $format = array_merge($format, ['messages' => $messages]);
+            $format = array_merge($format, $messages);
         } else {
             $format['messages'] = $messages;
         }
