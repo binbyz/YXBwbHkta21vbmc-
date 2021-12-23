@@ -87,3 +87,10 @@ $ php artisan db:seed --class=ProductSeeder
 ### 3. Check it out
 
 **로컬 머신**에서 `http://localhost:8080` 페이지에 접속하여 라라벨 프레임워크의 기본 화면이 정상적으로 출력되는지 확인합니다.
+
+정상적으로 페이지 출력이 확인되면, **API 명세** 확인 후 API를 호출 테스트 진행 또는 아래의 공유된 **Postman** 링크를 클릭하여 쉽게 테스트를 진행해 볼 수 있습니다.
+
+https://www.getpostman.com/collections/de66705eef32bc7c8892
+
+## API
+
