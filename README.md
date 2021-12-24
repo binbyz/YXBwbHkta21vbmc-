@@ -130,6 +130,7 @@ https://www.getpostman.com/collections/de66705eef32bc7c8892
 **Request and Bodies**
 
 🔎 `POST /member/login`
+
 🔎 `POST /member/logout`
 
 ```json
