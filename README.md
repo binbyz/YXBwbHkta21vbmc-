@@ -133,6 +133,8 @@ https://www.getpostman.com/collections/de66705eef32bc7c8892
 
 🔎 `POST /member/logout`
 
+로그아웃 호출의 경우 Body 값을 포함하지 않습니다.
+
 ```json
 {
     "email": [string],
