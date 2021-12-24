@@ -94,7 +94,7 @@ https://www.getpostman.com/collections/de66705eef32bc7c8892
 
 ## API Spec
 
-모든 API의 응답 데이터의 타입은 `application/json` 타입이면 기본적인 포맵은 동일합니다. 항상 `status` 키 값으로 응답의 성공 유무를 판단할 수 있습니다.
+모든 API의 용청 및 응답 데이터의 타입은 `application/json` 이며 기본적인 응답 스펙 또한 동일합니다. 항상 `status` 키 값으로 응답의 성공 유무를 판단할 수 있습니다.
 
 ### 회원가입
 
