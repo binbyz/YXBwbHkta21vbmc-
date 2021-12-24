@@ -92,5 +92,231 @@ $ php artisan db:seed --class=ProductSeeder
 
 https://www.getpostman.com/collections/de66705eef32bc7c8892
 
-## API
+## API Spec
+
+모든 API의 응답 데이터의 타입은 `application/json` 타입이면 기본적인 포맵은 동일합니다. 항상 `status` 키 값으로 응답의 성공 유무를 판단할 수 있습니다.
+
+### 회원가입
+
+회원 멤버 계정을 생성합니다.
+
+**Request and Bodies**
+
+🔎 `POST /api/member`
+
+```json
+{
+    "email": [string],
+    "password": [string],
+    "display_name": [string]
+}
+```
+
+**Response**
+
+```json
+{
+    "status": [bool],
+    "message": [string]
+}
+```
+
+### 로그인 및 로그아웃
+
+`stateless`로 상태관리는 하는 라라벨 프레임워크의 `api` 특성상 로그인 및 로그아웃 처리는 `stateful` 상태 관리가 되어야 하며, 일반적인 API 호출 URI와는 다르게 `api` prefix가 붙지 않습니다.
+
+기본적은 응답 포맷은 동일합니다.
+
+**Request and Bodies**
+
+🔎 `POST /member/login`
+🔎 `POST /member/logout`
+
+```json
+{
+    "email": [string],
+    "password": [string]
+}
+```
+
+**Response**
+
+```json
+{
+    "status": [bool],
+    "message": [string]
+}
+```
+
+### 상품정보 조회하기
+
+상품번호의 해당하는 상품 정보를 가져옵니다.
+
+**Request**
+
+🔎 `GET /api/shop/item/{id:integer}`
+
+**Response**
+
+```json
+{
+    "status": [bool],
+    "items": {
+        "id": [integer],
+        "goodsname": [string],
+        "price": [integer],
+        "display": [integer],
+        "created_at": [string],
+        "updated_at": [string|nullable],
+        "deleted_at": [string|nullable]
+    }
+}
+```
+
+| key | description |
+| --- | ----------- |
+| items.display | `1` \| `0` \(`1` = displayed\) |
+
+### 상품 주문
+
+상품 주문 API 또한 `stateful` 상태를 유지해야 합니다.
+
+**Request and Bodies**
+
+🔎 `POST /shop/order`
+
+```json
+{
+    "product_id": [integer]
+}
+```
+
+| key | description |
+| --- | ----------- |
+| product_id | 주문하려는 상품 번호 |
+
+**Response**
+
+```json
+{
+    "status": [bool],
+    "messages": [string]
+}
+```
+
+### 상품 주문 내역
+
+현재 세션에 조회할 수 있는 주문 내역을 가져옵니다.
+
+**Request**
+
+🔎 `GET /shop/orders`
+
+**Response**
+
+```json
+{
+    "status": true,
+    "items": [
+        ProductOrderSpec,
+        ...
+    ]
+}
+```
+
+**ProductOrderSpec**
+
+```json
+{
+    "id": [integer],
+    "member_id": [integer],
+    "goods_id": [integer],
+    "status": 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7,
+    "created_at": [string],
+    "updated_at": [string|nullable],
+    "deleted_at": [string|nullable],
+    "status_translated": [string],
+    "product_info": {
+        "id": [integer],
+        "goodsname": [string],
+        "price": [integer],
+        "display": [integer],
+        "created_at": [string],
+        "updated_at": [string|nullable],
+        "deleted_at": [string|nullable]
+    }
+}
+```
+
+`ProductOrderSpec`의 `status` 값이 갖는 의미는 아래 코드를 참고하시기 바랍니다.
+
+```php
+/**
+ * 주문 상태 정보
+ *
+ * 주문요청: 0
+ * 입금대기: 1
+ * 입금확인: 2
+ * 판매자 확인: 3
+ * 배송준비중 (작업중): 4
+ * 배송완료: 5
+ * 환불요청: 6
+ * 환불거절: 7
+ */
+const STATUS_ORDER_REQUEST = 0;
+const STATUS_INCOME_READY = 1;
+const STATUS_INCOME_COMPLETE = 2;
+const STATUS_SELLER_CHECKED = 3;
+const STATUS_SELLER_PACKAGING = 4;
+const STATUS_SELLER_DELIVERIED = 5;
+const STATUS_CLIENT_REFUND_REQUEST = 6;
+const STATUS_SELLER_REJECT_REFUND = 7;
+```
+
+**Example**
+```json
+{
+    "status": true,
+    "items": [
+        {
+            "id": 1,
+            "member_id": 1,
+            "goods_id": 1,
+            "status": 0,
+            "created_at": "2021-12-23T06:39:21.000000Z",
+            "updated_at": "2021-12-23T06:39:21.000000Z",
+            "deleted_at": null,
+            "status_translated": "주문 요청",
+            "product_info": {
+                "id": 1,
+                "goodsname": "테스트상품",
+                "price": 10000,
+                "display": 1,
+                "created_at": "2021-12-23T15:19:23.000000Z",
+                "updated_at": "2021-12-23T15:19:25.000000Z",
+                "deleted_at": null
+            }
+        },
+        {
+            "id": 2,
+            "member_id": 1,
+            "goods_id": 1,
+            "status": 0,
+            "created_at": "2021-12-23T06:39:32.000000Z",
+            "updated_at": "2021-12-23T06:39:32.000000Z",
+            "deleted_at": null,
+            "status_translated": "주문 요청",
+            "product_info": {
+                "id": 1,
+                "goodsname": "테스트상품",
+                "price": 10000,
+                "display": 1,
+                "created_at": "2021-12-23T15:19:23.000000Z",
+                "updated_at": "2021-12-23T15:19:25.000000Z",
+                "deleted_at": null
+            }
+        }
+    ]
+}
+```
 
